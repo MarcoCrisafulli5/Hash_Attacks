@@ -268,7 +268,7 @@ manager.run_brute_force_attack(
                 print(f"  Hash unici: {result['unique_hashes']}")
 ```
 
-### E' possibile aggiungere altri algoritmi di hash, consultare la classe StandardHash presente in hash_functions.py
+### E' possibile aggiungere altri algoritmi di hash, consultare la classe StandardHash presente in hash_functions.py e aggiungere coerentemente in main.py > HashSecurityDemo > self.hash_functions[] per utilizzare suddetti algoritmi a fini di test
 
 ### Dizionario personalizzato
 ```python

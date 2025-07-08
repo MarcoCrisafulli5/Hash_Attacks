@@ -97,6 +97,26 @@ class HashSecurityDemo:
             else:
                 self.print_error(f"Nessuna collisione in {result['attempts']} tentativi")
                 print(f"  Hash unici: {result['unique_hashes']}")
+
+    def demo_collision_attacks_strong(self):
+        """Dimostra attacchi di collisione"""
+        self.print_header("ATTACCHI DI COLLISIONE")
+        
+        hashes = ['md5', 'sha256']
+        
+        for hash_name in hashes:
+            hash_func = self.hash_functions[hash_name]
+            print(f"\nTestando {hash_func.name}...")
+            
+            collision_tester = HashCollisionTester(hash_func)
+            result = collision_tester.find_collision(10000)
+            
+            if result['collision_found']:
+                self.print_success(f"Collisione trovata dopo {result['attempts']} tentativi!")
+                print(f"  '{result['string1']}' e '{result['string2']}' -> {result['hash_value']}")
+            else:
+                self.print_error(f"Nessuna collisione in {result['attempts']} tentativi")
+                print(f"  Hash unici: {result['unique_hashes']}")            
     
     def demo_dictionary_attack(self):
         """Dimostra attacco dizionario"""
@@ -138,6 +158,40 @@ class HashSecurityDemo:
         # Usa password corta per demo rapida
         target_password = "abc"
         hash_func = self.hash_functions['weak_sum']
+        target_hash = hash_func.hash_string(target_password)
+        
+        print(f"Target: '{target_password}' -> Hash: {target_hash}")
+        print(f"Funzione hash: {hash_func.name}")
+        
+        # Esegue attacco brute force
+        manager = AttackManager(hash_func, target_hash)
+        
+        print(f"\nEseguendo attacco brute force...")
+        result = manager.run_brute_force_attack(
+            charset="abcdefghijklmnopqrstuvwxyz",
+            min_length=1,
+            max_length=4,
+            verbose=False
+        )
+        
+        if result.success:
+            self.print_success(f"Password trovata: '{result.password_found}'")
+            print(f"Tentativi: {result.attempts}")
+            print(f"Tempo: {result.time_elapsed:.3f} secondi")
+        else:
+            self.print_error("Password non trovata con brute force")
+        
+        # Salva risultato
+        self.results_manager.save_result(result)
+    
+
+    def demo_brute_force_attack_md5(self):
+        """Dimostra attacco brute force"""
+        self.print_header("ATTACCO BRUTE FORCE")
+        
+        # Usa password corta per demo rapida
+        target_password = "abc"
+        hash_func = self.hash_functions['md5']
         target_hash = hash_func.hash_string(target_password)
         
         print(f"Target: '{target_password}' -> Hash: {target_hash}")
@@ -334,13 +388,16 @@ class HashSecurityDemo:
             self.demo_hash_functions()
             time.sleep(2)
             
-            self.demo_collision_attacks()
+            self.demo_collision_attacks_strong()
             time.sleep(2)
             
             self.demo_dictionary_attack()
             time.sleep(2)
             
             self.demo_brute_force_attack()
+            time.sleep(2)
+
+            self.demo_brute_force_attack_md5()
             time.sleep(2)
             
             self.demo_hybrid_attack()
