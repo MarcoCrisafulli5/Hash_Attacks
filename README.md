@@ -191,7 +191,9 @@ sha256              8000            0            0.000
 
 ## 🔧 Configurazione Avanzata
 
-### Personalizzazione Attacchi - Modificare nel file main.py i seguenti parametri (NB il file custom_wordlist.txt va creato da parte dell'utente che intende utilizzare un dizionario personalizzato e va inserito nella cartella data\wordlists)
+### Personalizzazione Attacchi 
+
+Modificare nel file main.py i seguenti parametri (NB il file custom_wordlist.txt va creato da parte dell'utente che intende utilizzare un dizionario personalizzato e va inserito nella cartella data\wordlists)
 ```python
 # Brute force personalizzato
 manager.run_brute_force_attack(
@@ -202,9 +204,10 @@ manager.run_brute_force_attack(
 ```
 ### Personalizzazione demo attacchi
 
-# In main.py la classe HashSecurityDemos contiene tutte le varie demo degli attacchi (costituiscono un template base), la modifica è semplice e si può isolare esecuzione di un demo inserendo all'interno di interactive_menu() la voce desiderata associandola ad un intero (o semplicemente sostuituire una delle voci già presenti) o accorpare l'esecuzione della singola demo all'esecuzione globale di tutte le demo aggiungendo il caso desiderato a  run_full_demo(self) sempre in main.py
+ In main.py la classe HashSecurityDemos contiene tutte le varie demo degli attacchi (costituiscono un template base), la modifica è semplice e si può isolare esecuzione di un demo inserendo all'interno di interactive_menu() la voce desiderata associandola ad un intero (o semplicemente sostuituire una delle voci già presenti) o accorpare l'esecuzione della singola demo all'esecuzione globale di tutte le demo aggiungendo il caso desiderato a  run_full_demo(self) sempre in main.py
 
-# Esempio: Inserire attacco ibrido su hash sicuri (mi aspetto che abbia successo dato che la password scelta è comune (parola base nota e presente in common_passwords.txt), la variazione della parola base 'base123' viene testata da HybridAttack in attacks.py)
+ ## Esempio: 
+ Inserire attacco ibrido su hash sicuri (mi aspetto che abbia successo dato che la password scelta è comune (parola base nota e presente in common_passwords.txt), la variazione della parola base 'base123' viene testata da HybridAttack in attacks.py)
 ```python
     def demo_hybrid_attack_sha256(self):
         """Dimostra attacco ibrido"""
